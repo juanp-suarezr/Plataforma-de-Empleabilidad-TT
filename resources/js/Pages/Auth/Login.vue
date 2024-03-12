@@ -38,10 +38,14 @@
             </div>
 
             <div class="mt-6">
+                
                 <PrimaryButton class="w-full justify-center flex" :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
                     Iniciar Sesión
                 </PrimaryButton>
+                <Link :href="route('register')" class="mt-4 text-sm text-gray-400 underline hover:border-b">
+                    Deseas registrarte?
+                </Link>
             </div>
         </form>
     </GuestLayout>

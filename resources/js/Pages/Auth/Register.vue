@@ -36,8 +36,8 @@
                     Register
                 </PrimaryButton>
 
-                <Link :href="route('login')" class="mt-4 text-sm text-gray-600 underline hover:text-gray-900">
-                    Already registered?
+                <Link :href="route('login')" class="mt-4 text-sm text-gray-400 underline hover:border-b">
+                    ¿Ya estas registrado?
                 </Link>
             </div>
         </form>

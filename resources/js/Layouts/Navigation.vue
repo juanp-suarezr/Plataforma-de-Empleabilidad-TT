@@ -22,7 +22,7 @@
             
             <SeparadorMenu>trabajos</SeparadorMenu>
             <!-- Busqueda empresas (campista) -->
-            <nav-link :href="route('about')" :active="route().current('about')">
+            <nav-link v-if="$page.props.user.permissions.includes('buscarOfertas-listar')" :href="route('buscarOfertas')" :active="route().current('buscarOfertas')">
                 <MagnifyingGlassIcon class="h-6 w-6 text-white" />
                 <span class="mx-3">Busqueda de ofertas </span>
             </nav-link>
@@ -48,8 +48,8 @@
 
             <SeparadorMenu>Configuración</SeparadorMenu>
             <!-- publicacion de noticias -->
-            <nav-link v-if="$page.props.user.permissions.includes('usuarios-listar')" :href="route('users.index')"
-                :active="route().current('users.index')">
+            <nav-link v-if="$page.props.user.permissions.includes('eventos-list')" :href="route('eventos.index')"
+                :active="route().current('eventos.index')">
                 <BriefcaseIcon class="h-6 w-6 text-white" />
                 <span class="mx-3">publicar eventos</span>
             </nav-link>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BusquedaOfertasController;
+use App\Http\Controllers\GestionEventosController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -36,11 +38,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/buscarOfertas', [BusquedaOfertasController::class, 'index'])->name('buscarOfertas');
+
+
+
 });
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class)->middleware('auth');
     Route::resource('roles', RoleController::class);
+    Route::resource('eventos', GestionEventosController::class);
+    
 });
 
 
