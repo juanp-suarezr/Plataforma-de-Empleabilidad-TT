@@ -3,10 +3,10 @@
         class="fixed inset-0 z-20 bg-black opacity-50 transition-opacity lg:hidden"></div>
 
     <div :class="$page.props.showingMobileMenu ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-        class="overflow-y-auto fixed inset-y-0 left-0 z-30 w-64 bg-gray-900 transition duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
-        <div class="flex justify-center items-center mt-4">
+        class="overflow-y-auto fixed inset-y-0 left-0 z-30 w-64 bg-gradient-to-br from-purple-800 via-blue-800 to-blue-400 transition duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
+        <div class="flex justify-center items-center mt-5">
             <div class="flex items-center justify-center">
-                <img :src="imglogo_w" class="w-1/2" alt="">
+                <img :src="imglogo_w" class="w-5/6" alt="">
 
                 <!-- <span class="mx-2 text-2xl font-semibold text-white">Administrador</span> -->
             </div>
@@ -14,15 +14,50 @@
 
         <nav class="mt-6" x-data="{ isMultiLevelMenuOpen: false }">
             <SeparadorMenu>Menú</SeparadorMenu>
+            <!-- inicio -->
             <nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                <ChartPieIcon class="h-6 w-6 text-white" />
+                <HomeIcon class="h-6 w-6 text-white" />
                 <span class="mx-3">Inicio</span>
             </nav-link>
+            <!-- Eventos (campista) -->
             <nav-link :href="route('about')" :active="route().current('about')">
-                <ClipboardDocumentIcon class="h-6 w-6 text-white" />
-                <span class="mx-3">Pagina </span>
+                <NewspaperIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">Eventos, noticias </span>
             </nav-link>
+            <SeparadorMenu>trabajos</SeparadorMenu>
+            <!-- Busqueda empresas (campista) -->
+            <nav-link :href="route('about')" :active="route().current('about')">
+                <MagnifyingGlassIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">Busqueda de ofertas </span>
+            </nav-link>
+            <!-- Publicacion trabajo (campista) -->
+            <nav-link :href="route('about')" :active="route().current('about')">
+                <BriefcaseIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">Publicación de ofertas de trabajo </span>
+            </nav-link>
+
+            <!-- Busqueda empresas (empresa) -->
+            <nav-link :href="route('about')" :active="route().current('about')">
+                <MagnifyingGlassIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">Publicar oferta </span>
+            </nav-link>
+
+            <SeparadorMenu>Analisis</SeparadorMenu>
+            <!--  Análisis de datos -->
+            <nav-link v-if="$page.props.user.permissions.includes('usuarios-listar')" :href="route('users.index')"
+                :active="route().current('users.index')">
+                <ChartPieIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">Analítica de datos</span>
+            </nav-link>
+
             <SeparadorMenu>Configuración</SeparadorMenu>
+            <!-- publicacion de noticias -->
+            <nav-link v-if="$page.props.user.permissions.includes('usuarios-listar')" :href="route('users.index')"
+                :active="route().current('users.index')">
+                <BriefcaseIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">publicar eventos</span>
+            </nav-link>
+            <!-- usuarios -->
             <nav-link v-if="$page.props.user.permissions.includes('usuarios-listar')" :href="route('users.index')"
                 :active="route().current('users.index')">
                 <UserGroupIcon class="h-6 w-6 text-white" />
@@ -37,22 +72,7 @@
             </nav-link>
 
 
-            <a class="flex items-center mt-4  ml-4 py-2 px-6 text-gray-100" href="#"
-                @click="showingTwoLevelMenu = !showingTwoLevelMenu">
-                <BarsArrowDownIcon class="h-6 w-6 text-white" />
-                <span class="mx-3">Two-level menu</span>
-            </a>
-            <transition enter-to-class="transition-all duration-300 ease-in-out" enter-from-class="max-h-0 opacity-25"
-                leave-from-class="opacity-100 max-h-xl" leave-to-class="max-h-0 opacity-0">
-                <div v-show="showingTwoLevelMenu">
-                    <ul class="overflow-hidden p-2 mx-4 mt-2 space-y-2 text-sm font-medium text-white bg-gray-700 bg-opacity-50 rounded-md shadow-inner"
-                        aria-label="submenu">
-                        <li class="px-2 py-1 transition-colors duration-150">
-                            <Link class="w-full" :href="route('dashboard')">Child menu</Link>
-                        </li>
-                    </ul>
-                </div>
-            </transition>
+
         </nav>
     </div>
 </template>
@@ -61,18 +81,21 @@
 import NavLink from '@/Components/NavLink.vue';
 import SeparadorMenu from "@/Components/SeparadorMenu.vue";
 import { Link } from '@inertiajs/vue3';
-import imglogo_w from '/public/assets/img/logo_white.png'
+import imglogo_w from '/public/assets/img/logo.png'
 import { ref } from 'vue'
-import { FingerPrintIcon, UserGroupIcon, ChartPieIcon, ClipboardDocumentIcon, BarsArrowDownIcon } from '@heroicons/vue/24/solid'
+import { HomeIcon, NewspaperIcon, MagnifyingGlassIcon, BriefcaseIcon, FingerPrintIcon, UserGroupIcon, ChartPieIcon, BarsArrowDownIcon } from '@heroicons/vue/24/solid'
 
 export default {
     components: {
         NavLink,
         Link,
+        HomeIcon,
+        NewspaperIcon,
+        MagnifyingGlassIcon,
+        BriefcaseIcon,
+        ChartPieIcon,
         FingerPrintIcon,
         UserGroupIcon,
-        ChartPieIcon,
-        ClipboardDocumentIcon,
         BarsArrowDownIcon,
         SeparadorMenu
     },
