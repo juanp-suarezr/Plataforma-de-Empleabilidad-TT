@@ -22,7 +22,7 @@
             
             <SeparadorMenu>trabajos</SeparadorMenu>
             <!-- Busqueda empresas (campista) -->
-            <nav-link v-if="$page.props.user.permissions.includes('buscarOfertas-listar')" :href="route('buscarOfertas')" :active="route().current('buscarOfertas')">
+            <nav-link v-if="$page.props.user.permissions.includes('buscarOfertas-list')" :href="route('buscarOfertas')" :active="route().current('buscarOfertas')">
                 <MagnifyingGlassIcon class="h-6 w-6 text-white" />
                 <span class="mx-3">Busqueda de ofertas </span>
             </nav-link>

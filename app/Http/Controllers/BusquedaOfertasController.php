@@ -10,7 +10,7 @@ class BusquedaOfertasController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:buscarOfertas-listar', ['only' => ['index', 'store']]);
+        $this->middleware('permission:buscarOfertas-list', ['only' => ['index', 'store']]);
         
     }
 
