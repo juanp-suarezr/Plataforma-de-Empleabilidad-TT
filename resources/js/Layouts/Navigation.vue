@@ -19,11 +19,7 @@
                 <HomeIcon class="h-6 w-6 text-white" />
                 <span class="mx-3">Inicio</span>
             </nav-link>
-            <!-- Eventos (campista) -->
-            <nav-link :href="route('about')" :active="route().current('about')">
-                <NewspaperIcon class="h-6 w-6 text-white" />
-                <span class="mx-3">Eventos, noticias </span>
-            </nav-link>
+            
             <SeparadorMenu>trabajos</SeparadorMenu>
             <!-- Busqueda empresas (campista) -->
             <nav-link :href="route('about')" :active="route().current('about')">
@@ -32,14 +28,14 @@
             </nav-link>
             <!-- Publicacion trabajo (campista) -->
             <nav-link :href="route('about')" :active="route().current('about')">
-                <BriefcaseIcon class="h-6 w-6 text-white" />
-                <span class="mx-3">Publicación de ofertas de trabajo </span>
+                <ClipboardDocumentCheckIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">Mi perfil profesional</span>
             </nav-link>
 
             <!-- Busqueda empresas (empresa) -->
             <nav-link :href="route('about')" :active="route().current('about')">
-                <MagnifyingGlassIcon class="h-6 w-6 text-white" />
-                <span class="mx-3">Publicar oferta </span>
+                <ShareIcon class="h-6 w-6 text-white" />
+                <span class="mx-3">Mis ofertas de trabajo </span>
             </nav-link>
 
             <SeparadorMenu>Analisis</SeparadorMenu>
@@ -83,7 +79,7 @@ import SeparadorMenu from "@/Components/SeparadorMenu.vue";
 import { Link } from '@inertiajs/vue3';
 import imglogo_w from '/public/assets/img/logo.png'
 import { ref } from 'vue'
-import { HomeIcon, NewspaperIcon, MagnifyingGlassIcon, BriefcaseIcon, FingerPrintIcon, UserGroupIcon, ChartPieIcon, BarsArrowDownIcon } from '@heroicons/vue/24/solid'
+import { HomeIcon, NewspaperIcon, MagnifyingGlassIcon, BriefcaseIcon, ShareIcon, ClipboardDocumentCheckIcon, FingerPrintIcon, UserGroupIcon, ChartPieIcon, BarsArrowDownIcon } from '@heroicons/vue/24/solid'
 
 export default {
     components: {
@@ -93,6 +89,8 @@ export default {
         NewspaperIcon,
         MagnifyingGlassIcon,
         BriefcaseIcon,
+        ShareIcon,
+        ClipboardDocumentCheckIcon,
         ChartPieIcon,
         FingerPrintIcon,
         UserGroupIcon,
