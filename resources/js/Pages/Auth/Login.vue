@@ -1,7 +1,7 @@
 <template>
     <Head title="Iniciar Sesión" />
 
-    <GuestLayout>
+    <GuestLayout :isRegister=false>
         <Link href="/" class="flex items-center justify-center">
         <ApplicationLogo class="fill-current text-gray-500" />
         </Link>

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,7 +22,31 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+
+        $headers = [
+            'Accept: application/json',
+            'Content-type: application/json',
+            "X-App-Token: " . '9hopib2llig08er5xayl72nen'
+
+
+        ];
+        $response = Http::withHeaders($headers)->get('https://www.datos.gov.co/resource/xdk5-pm3f.json');
+        $data = $response->json();
+
+        $datosRegionales=[]; 
+
+        foreach ($data as $key => $value) {
+            $datosRegionales[] = [
+                'departamento' => $value['departamento'],
+                'municipio' => $value['municipio']
+            ];
+        }
+
+        
+
+        return Inertia::render('Auth/Register', [
+            'resultados' => $datosRegionales
+        ]);
     }
 
     /**
@@ -33,7 +58,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
