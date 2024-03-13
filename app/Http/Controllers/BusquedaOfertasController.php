@@ -20,8 +20,8 @@ class BusquedaOfertasController extends Controller
         return Inertia::render('BuscarOfertas/Index', [
 
             'ofertas' => Ofertas::query()
-                ->join('usuario', 'ofertas.empresa_id', '=', 'usuario.id')
-                ->select('ofertas.*', 'usuario.nombre', 'usuario.logo', 'usuario.nit', 'usuario.telefono')
+                ->join('users', 'ofertas.empresa_id', '=', 'users.id')
+                ->select('ofertas.*', 'users.nombre', 'users.logo', 'users.nit', 'users.telefono')
                 ->when(RequestFacade::input('search'), function ($query, $search) {
                     $query->where('ubicacion', 'like', '%' . $search . '%')
                         ->OrWhere('nombre', 'like', '%' . $search . '%');

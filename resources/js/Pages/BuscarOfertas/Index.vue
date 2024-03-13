@@ -47,7 +47,7 @@
                                     :class="{ 'border-top-1 surface-border': index !== 0 }">
                                     <div class="md:w-36 relative">
                                         <img class="block xl:block mx-auto border-round w-full"
-                                            :src="item.imagen ? '' : logo" :alt="item.nombre" />
+                                            :src="item.logo ? '' : logo" :alt="item.nombre" />
 
                                     </div>
                                     <div
@@ -56,32 +56,29 @@
                                             <div>
                                                 <div
                                                     class="py-2 px-4 rounded-md shadow-xl bg-amber-400 flex inline-flex">
-                                                    <span class="md:font-base text-sm text-gray-900 m-auto">{{ form.tipo
+                                                    <span class="md:font-base text-sm text-gray-900 m-auto">{{ item.categoria
                                                         }}</span>
                                                 </div>
 
                                                 <div class="md:text-xl text-base font-medium text-900 mt-2">
-                                                    {{ item.nombre }}</div>
+                                                    {{ item.titulo }}</div>
                                                 <span class="font-medium md:text-lg text-sm">{{ item.descripcion
                                                     }}</span>
                                             </div>
                                             <div class="surface-100 p-1 rounded-xl">
                                                 <div
                                                     class="surface-0 flex align-items-center gap-2 justify-center py-1 px-2 rounded-xl">
-                                                    <span class="font-medium text-secondary text-sm">{{ item.fechaInicio
+                                                    <span class="font-medium text-secondary text-sm">{{ item.horarios
                                                         }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="flex flex-col md:align-items-end justify-end gap-5">
-                                            <span class="text-xl font-semibold text-900">{{ formatNumber(item.precio)
+                                            <span class="text-xl font-semibold text-900">{{ formatNumber(item.salario)
                                                 }}</span>
 
                                             <div class="flex flex-row gap-2">
-                                                <button
-                                                    class="rounded-xl bg-gray-800 border border-amber-500 hover:bg-amber-400 hover:text-gray-800 w-full p-4 text-amber-400 text-base md:text-lg">
-                                                    Reservar
-                                                </button>
+                                                
 
                                             </div>
                                         </div>
