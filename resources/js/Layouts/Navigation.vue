@@ -51,7 +51,7 @@
             </nav-link>
 
             <!-- Busqueda empresas (empresa) -->
-            <nav-link :href="route('about')" :active="route().current('about')">
+            <nav-link :href="route('ofertas.index')" :active="route().current('ofertas.index')">
                 <ShareIcon class="h-6 w-6 text-white" />
                 <span class="mx-3">Mis ofertas de trabajo </span>
             </nav-link>
