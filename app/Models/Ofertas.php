@@ -17,11 +17,12 @@ class Ofertas extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'empresa_id',
         'titulo',
         'descripcion',
         'horarios',
         'jornada',
-        'tipo_lugar_trabajo',
+        'modalidad_trabajo',
         'tipo_contrato',
         'categoria',
         'cargo',

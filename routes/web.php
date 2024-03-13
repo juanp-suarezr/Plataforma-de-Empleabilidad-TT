@@ -5,6 +5,7 @@ use App\Http\Controllers\GestionEventosController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\OfertasController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,8 @@ Route::get('/', function () {
     }
 });
 
+Route::resource('ofertas', OfertasController::class);
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -41,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/buscarOfertas', [BusquedaOfertasController::class, 'index'])->name('buscarOfertas');
 
+    // Route::get('/ofertas', [OfertasController::class, 'index'])->name('ofertas');
+    
 
 
 });
@@ -49,6 +54,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class)->middleware('auth');
     Route::resource('roles', RoleController::class);
     Route::resource('eventos', GestionEventosController::class);
+    
+   
     
 });
 
