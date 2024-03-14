@@ -26,7 +26,7 @@
                 <!-- nombre -->
                 <div class="mb-2">
                     <InputLabel for="name" value="Nombre" class="text-white" />
-                    <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus
+                    <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required
                         autocomplete="name" />
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
@@ -34,31 +34,42 @@
                 <div class="mb-2">
                     <InputLabel for="identificacion" :value="checked ? 'NIT' : 'Identificación'" class="text-white" />
                     <TextInput id="identificacion" type="text" class="mt-1 block w-full" v-model="form.identificacion"
-                        required autofocus autocomplete="identificacion" />
+                        required autocomplete="identificacion" />
                     <InputError class="mt-2" :message="form.errors.identificacion" />
                 </div>
                 <!-- telefono -->
                 <div class="mb-2">
                     <InputLabel for="telefono" value="Telefono" class="text-white" />
-                    <TextInput id="telefono" type="text" class="mt-1 block w-full" v-model="form.telefono" required
-                        autofocus autocomplete="telefono" />
+                    <TextInput id="telefono" type="tel" class="mt-1 block w-full" v-model="form.telefono" required
+                        autocomplete="telefono" />
                     <InputError class="mt-2" :message="form.errors.telefono" />
                 </div>
                 <!-- departamento -->
                 <div class="mb-2">
                     <InputLabel for="departamento" value="Departamento" class="text-white" />
-                    <select id="departamento" name="deparatamento" v-model="deparatamentoSelect"
+                    <select id="departamento" name="departamento" v-model="deparatamentoSelect"
                         class="block w-full px-4 py-2 mt-1 text-base text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
 
-                        <option class="text-black" v-for="dep in nomDepart" :key="dep.id" :value="dep.departamento">{{
-        dep.departamento }}
+                        <option class="text-black" v-for="dep in nomDepart" :key="dep.id" :value="dep.departamento">
+                            {{ dep.departamento }}
+                        </option>
+                    </select>
+                </div>
+                <!-- municipio -->
+                <div class="mb-2">
+                    <InputLabel for="ciudad" value="Municipio" class="text-white" />
+                    <select id="ciudad" name="ciudad" v-model="form.ciudad" :disabled="deparatamentoSelect == ''"
+                        class="block w-full px-4 py-2 mt-1 text-base text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+
+                        <option class="text-black" v-for="mun in nomMuni" :key="mun.id" :value="mun.municipio">
+                            {{ mun.municipio }}
                         </option>
                     </select>
                 </div>
                 <!-- email -->
                 <div class="mb-2">
                     <InputLabel for="email" value="Email" class="text-white" />
-                    <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
+                    <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
                         autocomplete="username" />
                     <InputError class="mt-2" :message="form.errors.email" />
                 </div>
@@ -131,7 +142,7 @@ const deparatamentoSelect = ref("");
 const nomDepart = ref([{ departamento: 'Nariño' },
 { departamento: 'Cauca' },]);
 
-//array con departamentos
+//array con municipios+
 const nomMuni = ref([]);
 
 //Cambiar form
@@ -143,12 +154,12 @@ watch(checked, (value) => {
     if (checked.value == false) {
 
         nomDepart.value = [
-            { departamento: 'Nariño' },
             { departamento: 'Cauca' },
+            { departamento: 'Nariño' },
 
         ];
 
-        console.log(nomDepart.value);
+        
 
 
     } else {
@@ -167,10 +178,14 @@ watch(checked, (value) => {
                     id: index,
                     departamento: element.departamento
                 });
+
+                nomDepart.value.sort((a, b) => (a.departamento > b.departamento) ? 1 : -1);
+
+            
             }
         });
 
-        console.log(nomDepart.value);
+
 
     }
 
@@ -178,6 +193,23 @@ watch(checked, (value) => {
 
 
 watch(deparatamentoSelect, (val) => {
+
+    
+
+    nomMuni.value = [];
+    props.resultados.filter((item,index) => {
+        if (item.departamento == val) {
+            nomMuni.value.push(
+                {
+                    id: index,
+                    municipio: item.municipio,
+                });
+        }
+        return nomMuni.value.sort((a, b) => (a.municipio > b.municipio) ? 1 : -1);;
+    });
+
+    console.log(nomMuni.value);
+
 
 
 
