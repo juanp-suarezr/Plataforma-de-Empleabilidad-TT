@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -33,7 +34,7 @@ class RegisteredUserController extends Controller
         $response = Http::withHeaders($headers)->get('https://www.datos.gov.co/resource/xdk5-pm3f.json');
         $data = $response->json();
 
-        $datosRegionales=[]; 
+        $datosRegionales = [];
 
         foreach ($data as $key => $value) {
             $datosRegionales[] = [
@@ -42,7 +43,7 @@ class RegisteredUserController extends Controller
             ];
         }
 
-        
+
 
         return Inertia::render('Auth/Register', [
             'resultados' => $datosRegionales
@@ -57,7 +58,11 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string',
+            'identificacion' => 'required|string|max:12',
+            'region' => 'required|string',
+            'ciudad' => 'required|string',
+            'telefono' => 'required|string|max:10',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -65,8 +70,22 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'identificacion' => $request->identificacion,
+            'region' => $request->region,
+            'ciudad' => $request->ciudad,
+            'telefono' => $request->telefono,
             'password' => Hash::make($request->password),
         ]);
+
+        
+        $roles = Role::pluck('name', 'id')->all();
+        
+
+        if ($request->rol) {
+            $user->assignRole($roles['3']);
+        } else {
+            $user->assignRole($roles['2']);
+        }
 
         event(new Registered($user));
 

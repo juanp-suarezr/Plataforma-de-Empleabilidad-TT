@@ -55,9 +55,9 @@
                                         <div class="flex flex-col md:flex-row justify-between align-items-start gap-2">
                                             <div>
                                                 <div class="py-2 px-4 rounded-md shadow-xl bg-sky-600 flex inline-flex">
-                                                    <span class="md:font-base text-sm text-white m-auto">{{
-                        item.categoria
-                    }}</span>
+                                                    <span class="md:font-base text-sm text-white m-auto">
+                                                        {{ item.categoria}}
+                                                    </span>
                                                 </div>
 
                                                 <div class="md:text-xl text-base font-medium text-900 mt-2">

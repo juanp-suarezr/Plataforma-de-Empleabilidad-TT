@@ -88,10 +88,14 @@
                     <InputError class="mt-2" :message="form.errors.password_confirmation" />
                 </div>
 
+                <!-- input oculto para asignar roles -->
+                <input type='hidden' name='rol'  v-model="checked"/>
+
+
             </div>
 
             <div class="mt-4 flex flex-col items-center">
-                <PrimaryButton class="w-2/6" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="w-2/6 justify-center" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </PrimaryButton>
 
@@ -113,12 +117,20 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue'
 
+
 const form = useForm({
     name: '',
+    estado: '',
+    identificacion: '',
+    telefono: '',
+    telefono: '',
+    region: '',
+    ciudad: '',
     email: '',
     password: '',
     password_confirmation: '',
     terms: false,
+    rol: '',
 });
 
 const props = defineProps({
@@ -217,6 +229,10 @@ watch(deparatamentoSelect, (val) => {
 
 
 const submit = () => {
+
+    form.region = deparatamentoSelect.value;
+    form.rol = checked.value;
+    
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
