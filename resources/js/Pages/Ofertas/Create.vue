@@ -126,7 +126,7 @@ const submit = () => {
                     </div>
                     <div>
                         <InputLabel for="salario" value="Salario" />
-                        <TextInput id="salario" type="text" class="mt-1 block w-full" v-model="form.salario" required
+                        <TextInput id="salario" type="number" class="mt-1 block w-full" v-model="form.salario" required
                             autocomplete="salario" />
                         <InputError class="mt-2" :message="form.errors.salario" />
                     </div>

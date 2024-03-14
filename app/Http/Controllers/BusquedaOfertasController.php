@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Http\Controllers\Controller;
 use App\Models\Ofertas;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -21,13 +22,13 @@ class BusquedaOfertasController extends Controller
 
             'ofertas' => Ofertas::query()
                 ->join('users', 'ofertas.empresa_id', '=', 'users.id')
-                ->select('ofertas.*', 'users.nombre', 'users.logo', 'users.nit', 'users.telefono')
+                ->select('ofertas.*', 'users.name', 'users.imagen', 'users.identificacion', 'users.telefono')
                 ->when(RequestFacade::input('search'), function ($query, $search) {
                     $query->where('ubicacion', 'like', '%' . $search . '%')
-                        ->OrWhere('nombre', 'like', '%' . $search . '%');
+                        ->OrWhere('name', 'like', '%' . $search . '%');
                 })->when(RequestFacade::input('jornada'), function ($query, $jornada) {
                     $query->where('jornada', $jornada);
-                })->with('roles')->paginate(5)
+                })->paginate(5)
                 ->withQueryString(),
             'filters' => RequestFacade::only(['search'])
 

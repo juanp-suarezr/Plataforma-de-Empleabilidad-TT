@@ -38,47 +38,67 @@
         <div class="flex flex-col overflow-x-auto">
             <div class="inline-block rounded-lg shadow">
 
-                <DataView :value="props.ofertas" paginator :rows="5">
+                <DataView :value="ofertas.data" paginator :rows="5">
 
                     <template #list="slotProps">
                         <div class="grid">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
                                 <div class="flex flex-col sm:flex-row sm:align-items-center p-4 gap-3"
                                     :class="{ 'border-top-1 surface-border': index !== 0 }">
-                                    <div class="md:w-36 relative">
-                                        <img class="block xl:block mx-auto border-round w-full"
-                                            :src="item.logo ? '' : logo" :alt="item.nombre" />
+                                    <div class="md:w-36 relative flex">
+                                        <img class="block xl:block mx-auto border-round w-full flex m-auto"
+                                            :src="item.imagen != 'User' ? item.imagen : logo" :alt="item.name" />
 
                                     </div>
                                     <div
                                         class="flex flex-col md:flex-row justify-between md:align-items-center flex-1 gap-4 ms-2">
                                         <div class="flex flex-col md:flex-row justify-between align-items-start gap-2">
                                             <div>
-                                                <div
-                                                    class="py-2 px-4 rounded-md shadow-xl bg-amber-400 flex inline-flex">
-                                                    <span class="md:font-base text-sm text-gray-900 m-auto">{{ item.categoria
-                                                        }}</span>
+                                                <div class="py-2 px-4 rounded-md shadow-xl bg-sky-600 flex inline-flex">
+                                                    <span class="md:font-base text-sm text-white m-auto">{{
+                        item.categoria
+                    }}</span>
                                                 </div>
 
                                                 <div class="md:text-xl text-base font-medium text-900 mt-2">
                                                     {{ item.titulo }}</div>
                                                 <span class="font-medium md:text-lg text-sm">{{ item.descripcion
                                                     }}</span>
+
+                                                <div class="surface-100 p-1" style="border-radius: 30px">
+                                                    <div
+                                                        class="surface-0 bg-gray-200 shadow-xl rounded-lg flex inline-flex align-items-center gap-2 justify-content-center py-1 px-2">
+                                                        <span class="text-900 font-medium text-sm m-auto">{{ item.name
+                                                            }}</span>
+
+                                                    </div>
+                                                </div>
                                             </div>
+
+
+                                        </div>
+                                        <div class="flex flex-col md:align-items-end justify-end gap-2">
                                             <div class="surface-100 p-1 rounded-xl">
                                                 <div
                                                     class="surface-0 flex align-items-center gap-2 justify-center py-1 px-2 rounded-xl">
-                                                    <span class="font-medium text-secondary text-sm">{{ item.horarios
-                                                        }}</span>
+                                                    <span class="font-medium text-secondary text-sm">
+                                                        Horarios: {{ item.horarios }}
+                                                    </span>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="flex flex-col md:align-items-end justify-end gap-5">
-                                            <span class="text-xl font-semibold text-900">{{ formatNumber(item.salario)
-                                                }}</span>
+                                            <span class="font-medium text-secondary text-sm">
+                                                Jornada: {{ item.jornada }}
+                                            </span>
+                                            <span class="font-medium text-secondary text-sm">
+                                                Tipo de contrato: {{ item.tipo_contrato }}
+                                            </span>
+
+                                            <span class="text-xl font-semibold text-900">
+                                                Salario: {{formatNumber(item.salario)}}
+                                            </span>
 
                                             <div class="flex flex-row gap-2">
-                                                
+
 
                                             </div>
                                         </div>
@@ -109,6 +129,7 @@ import Avatar from 'primevue/avatar';
 import { MagnifyingGlassIcon } from "@heroicons/vue/24/solid";
 import DataView from 'primevue/dataview';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
+import logo from '/public/assets/img/logo.png';
 
 
 const props = defineProps({
@@ -122,12 +143,14 @@ const props = defineProps({
     },
 });
 
+console.log(props.ofertas);
+
 // pass filters in search
 let search = ref(props.filters.search);
 let estado_users = ref(props.filters.estado_users ?? "");
 const handleEnterKey = () => {
     router.get(
-        "/users",
+        "/buscarOfertas",
         { search: search.value, estado_users: estado_users.value },
         {
             preserveState: true,
@@ -151,4 +174,13 @@ const getInitials = function (name) {
 watch(search, (value) => {
     console.log("Valor de búsqueda actualizado:", value)
 });
+
+const formatNumber = value => {
+    // Utilizar el filtro toLocaleString con el formato colombiano
+    return value.toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP'
+    });
+}
+
 </script>

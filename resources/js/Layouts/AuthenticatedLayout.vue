@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen bg-gray-200 font-roboto bg-gradient-to-br from-blue-700 via-blue-400 to-purple-800">
+    <div class="flex h-screen bg-gray-200 font-roboto bg-gradient-to-br from-blue-700/80 via-blue-400/80 to-purple-800/60">
         <Navigation />
 
         <div class="flex flex-1 flex-col overflow-hidden">
