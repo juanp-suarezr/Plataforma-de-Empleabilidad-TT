@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ofertas;
+use App\Models\Postulaciones;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 
@@ -17,20 +19,31 @@ class OfertasController extends Controller
     function index() {
         // $ofertas = Ofertas::all();
 
+        $ofertas = Ofertas::query()
+        ->where('empresa_id', Auth::id())
+        ->join('users', 'ofertas.empresa_id', '=', 'users.id')
+        ->select('ofertas.*', 'users.name', 'users.imagen', 'users.identificacion', 'users.telefono', 'users.email')
+        ->when(RequestFacade::input('search'), function ($query, $search) {
+            $query->where('ubicacion', 'like', '%' . $search . '%')
+                ->OrWhere('name', 'like', '%' . $search . '%');
+        })->when(RequestFacade::input('jornada'), function ($query, $jornada) {
+            $query->where('jornada', $jornada);
+        })->paginate(5)
+        ->withQueryString();
+
+        $resultados = Postulaciones::select('oferta_id', DB::raw('COUNT(*) as repeticiones'))
+        ->groupBy('oferta_id')
+        ->orderByDesc('repeticiones')
+        ->get();
+
+    
         return Inertia::render('Ofertas/Index', [
 
-            'users' => Ofertas::query()
-                ->where('empresa_id', Auth::id())
-                ->join('users', 'ofertas.empresa_id', '=', 'users.id')
-                ->select('ofertas.*', 'users.name', 'users.imagen', 'users.identificacion', 'users.telefono')
-                ->when(RequestFacade::input('search'), function ($query, $search) {
-                    $query->where('ubicacion', 'like', '%' . $search . '%')
-                        ->OrWhere('name', 'like', '%' . $search . '%');
-                })->when(RequestFacade::input('jornada'), function ($query, $jornada) {
-                    $query->where('jornada', $jornada);
-                })->paginate(5)
-                ->withQueryString(),
-            'filters' => RequestFacade::only(['search'])
+            'ofertas' => $ofertas,
+            'filters' => RequestFacade::only(['search']),
+            'cantidad_postulaciones' => $resultados,
+            
+            
 
         ]);
     }

@@ -44,6 +44,11 @@
                                     </th>
                                     <th
                                         class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                                        Cantidad postulaciones
+                                    </th>
+
+                                    <th
+                                        class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
                                         Salario
                                     </th>
                                     <th
@@ -53,8 +58,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="user in users.data" :key="user.id" class="text-gray-700">
-                                    
+                                <tr v-for="user in ofertas.data" :key="user.id" class="text-gray-700">
+
                                     <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">{{ user.titulo }}</p>
                                     </td>
@@ -68,10 +73,13 @@
                                         <p class="text-gray-900 whitespace-no-wrap">{{ user.modalidad_trabajo }}</p>
                                     </td>
                                     <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap flex justify-center">{{ postulaciones(user.id) }}</p>
+                                    </td>
+                                    <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">{{ formatNumber(user.salario) }}</p>
                                     </td>
                                     <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                                        <SecondaryButton :href="route('users.edit', user.id)">
+                                        <SecondaryButton :href="route('ofertas.edit', user.id)">
                                             Editar
                                         </SecondaryButton>
                                     </td>
@@ -83,7 +91,7 @@
             </div>
         </div>
         <div class="flex flex-col items-center border-t bg-white px-5 py-5 xs:flex-row xs:justify-between">
-            <pagination :links="users.links" />
+            <pagination :links="ofertas.links" />
         </div>
 
 
@@ -109,7 +117,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Avatar from 'primevue/avatar';
 
 const props = defineProps({
-    users: {
+    ofertas: {
         type: Object,
         default: () => ({}),
     },
@@ -117,14 +125,20 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    cantidad_postulaciones: {
+        type: Object,
+        default: () => ({}),
+    }
 });
+
+
 
 // pass filters in search
 let search = ref(props.filters.search);
 let estado_users = ref(props.filters.estado_users ?? "");
 const handleEnterKey = () => {
     router.get(
-        "/users",
+        "/ofertas",
         { search: search.value, estado_users: estado_users.value },
         {
             preserveState: true,
@@ -156,6 +170,28 @@ const formatNumber = value => {
         currency: 'COP'
     });
 }
+
+const postulaciones = id => {
+
+    //cantidad postulaciones
+    let cantidad;
+    let mensaje;
+
+    cantidad = props.cantidad_postulaciones.find(item => item.oferta_id == id);
+
+    if (cantidad) {
+        mensaje = cantidad.repeticiones;
+    } else {
+        mensaje = 0;
+    }
+
+    return mensaje;
+    
+
+
+}
+
+console.log(props);
 
 // const swal = inject('$swal');
 

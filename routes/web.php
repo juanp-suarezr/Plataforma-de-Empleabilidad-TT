@@ -29,7 +29,7 @@ Route::get('/', function () {
     }
 });
 
-Route::resource('ofertas', OfertasController::class);
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -42,7 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/buscarOfertas', [BusquedaOfertasController::class, 'index'])->name('buscarOfertas');
+    Route::get('/buscarOfertas', [BusquedaOfertasController::class, 'index'])->name('buscarOfertas.index');
+    Route::post('/buscarOfertas/', [BusquedaOfertasController::class, 'create'])->name('buscarOfertas.create');
 
     // Route::get('/ofertas', [OfertasController::class, 'index'])->name('ofertas');
     
@@ -54,6 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class)->middleware('auth');
     Route::resource('roles', RoleController::class);
     Route::resource('eventos', GestionEventosController::class);
+    Route::resource('ofertas', OfertasController::class);
     
    
     
