@@ -62,7 +62,7 @@
 
                                                 <div class="md:text-xl text-base font-medium text-900 mt-2">
                                                     {{ item.titulo }}</div>
-                                                <span class="font-medium md:text-lg text-sm">{{ item.descripcion
+                                                <span class="font-medium md:text-lg text-sm"> Modalidad: {{ item.modalidad_trabajo
                                                     }}</span>
 
                                                 <div class="surface-100 p-1" style="border-radius: 30px">
@@ -86,12 +86,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <span class="font-medium text-secondary text-sm">
-                                                Jornada: {{ item.jornada }}
-                                            </span>
-                                            <span class="font-medium text-secondary text-sm">
-                                                Tipo de contrato: {{ item.tipo_contrato }}
-                                            </span>
+                                            
 
                                             <span class="text-xl font-semibold text-900">
                                                 Salario: {{formatNumber(item.salario)}}

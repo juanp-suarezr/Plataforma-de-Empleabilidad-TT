@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ofertas;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 
@@ -15,7 +17,22 @@ class OfertasController extends Controller
     function index() {
         // $ofertas = Ofertas::all();
 
-        return Inertia::render('Ofertas/Index');
+        return Inertia::render('Ofertas/Index', [
+
+            'users' => Ofertas::query()
+                ->where('empresa_id', Auth::id())
+                ->join('users', 'ofertas.empresa_id', '=', 'users.id')
+                ->select('ofertas.*', 'users.name', 'users.imagen', 'users.identificacion', 'users.telefono')
+                ->when(RequestFacade::input('search'), function ($query, $search) {
+                    $query->where('ubicacion', 'like', '%' . $search . '%')
+                        ->OrWhere('name', 'like', '%' . $search . '%');
+                })->when(RequestFacade::input('jornada'), function ($query, $jornada) {
+                    $query->where('jornada', $jornada);
+                })->paginate(5)
+                ->withQueryString(),
+            'filters' => RequestFacade::only(['search'])
+
+        ]);
     }
 
     public function create()
@@ -43,7 +60,7 @@ class OfertasController extends Controller
        
         // Crear y persistir nueva oferta
         $oferta = Ofertas::create([
-            'empresa_id' => 1,
+            'empresa_id' => Auth::id(),
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
             'horarios' => $request->horarios,

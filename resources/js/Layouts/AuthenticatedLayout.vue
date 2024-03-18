@@ -1,5 +1,7 @@
 <template>
-    <div class="flex h-screen bg-gray-200 font-roboto bg-gradient-to-br from-blue-700/80 via-blue-400/80 to-purple-800/60">
+
+    <!-- bg-gradient-to-br from-blue-700/80 via-blue-400/80 to-purple-800/60 -->
+    <div class="flex h-screen bg-gray-200 font-roboto bg-gray-200">
         <Navigation />
 
         <div class="flex flex-1 flex-col overflow-hidden">
@@ -26,10 +28,14 @@ import Navigation from '@/Layouts/Navigation.vue';
 
 
 <style scoped>
+
     .fondo {
-        background: url('../../../public/assets/img/fondo.svg');
+        background: url('../../../public/assets/img/fondo.png');
         background-size: cover;
+        background-color: rgba(255, 255, 255, 0.5);
     }
+
+
 </style>
 
 

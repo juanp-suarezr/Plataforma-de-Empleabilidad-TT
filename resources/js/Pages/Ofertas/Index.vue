@@ -1,4 +1,5 @@
 <template>
+
     <Head title="Ofertas" />
 
     <AuthenticatedLayout>
@@ -14,57 +15,148 @@
                 </PrimaryLink>
             </div>
         </div>
-       
-        
 
-        
-        <Card style="width: 25rem; overflow: hidden">
-            <template #header>
-                <img alt="user header" src="/images/usercard.png" />
-            </template>
-            <template #title>Advanced Card</template>
-            <template #subtitle>Card subtitle</template>
-            <template #content>
-                <p class="m-0">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-                    quas!
-                </p>
-            </template>
-            <template #footer>
-                <div class="flex gap-3 mt-1">
-                    <Button label="Cancel" severity="secondary" outlined class="w-full" />
-                    <Button label="Save" class="w-full" />
+
+
+        <div class="flex flex-col overflow-x-auto">
+            <div class="inline-block rounded-lg shadow">
+                <div class="inline-block min-w-full py-2">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full whitespace-no-wrap ">
+                            <thead>
+                                <tr
+                                    class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    <th
+                                        class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                                        titulo
+                                    </th>
+                                    <th
+                                        class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                                        horarios
+                                    </th>
+                                    <th
+                                        class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                                        categoria
+                                    </th>
+                                    <th
+                                        class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                                        tipo trabajo
+                                    </th>
+                                    <th
+                                        class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                                        Salario
+                                    </th>
+                                    <th
+                                        class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                                        Acciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in users.data" :key="user.id" class="text-gray-700">
+                                    
+                                    <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">{{ user.titulo }}</p>
+                                    </td>
+                                    <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">{{ user.horarios }}</p>
+                                    </td>
+                                    <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">{{ user.categoria }}</p>
+                                    </td>
+                                    <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">{{ user.modalidad_trabajo }}</p>
+                                    </td>
+                                    <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">{{ formatNumber(user.salario) }}</p>
+                                    </td>
+                                    <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                        <SecondaryButton :href="route('users.edit', user.id)">
+                                            Editar
+                                        </SecondaryButton>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </template>
-        </Card>
+            </div>
+        </div>
+        <div class="flex flex-col items-center border-t bg-white px-5 py-5 xs:flex-row xs:justify-between">
+            <pagination :links="users.links" />
+        </div>
 
-        
 
-      
+
+
+
 
 
     </AuthenticatedLayout>
 </template>
 
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
 // import Pagination from '@/Components/Pagination.vue'
+import { ref } from "vue";
+import { watch } from "vue";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryLink from '@/Components/PrimaryLink.vue';
-// import Modal from '@/Components/Modal.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import Pagination from '@/Components/Pagination.vue'
+import { Head } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3'
-import { ref, computed, watch, inject, onMounted } from 'vue';
-// import SecondaryButton from "@/Components/SecondaryButton.vue";
-// import DangerButton from '@/Components/DangerButton.vue';
-// import InputError from '@/Components/InputError.vue';
-// import InputLabel from '@/Components/InputLabel.vue';
-// import TextInput from '@/Components/TextInput.vue';
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Avatar from 'primevue/avatar';
 
-import Card from 'primevue/card';
+const props = defineProps({
+    users: {
+        type: Object,
+        default: () => ({}),
+    },
+    filters: {
+        type: Object,
+        default: () => ({}),
+    },
+});
 
-// const props = defineProps({
-//     roles: Object
-// })
+// pass filters in search
+let search = ref(props.filters.search);
+let estado_users = ref(props.filters.estado_users ?? "");
+const handleEnterKey = () => {
+    router.get(
+        "/users",
+        { search: search.value, estado_users: estado_users.value },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+};
+const getInitials = function (name) {
+    let parts = name.split(' ');
+    let initials = '';
+    let count = 0;
+
+    for (var i = 0; i < parts.length && count < 2; i++) {
+        if (parts[i].length > 0 && parts[i] !== '') {
+            initials += parts[i][0];
+            count++;
+        }
+    }
+    return initials;
+};
+watch(search, (value) => {
+    console.log("Valor de búsqueda actualizado:", value)
+});
+
+const formatNumber = value => {
+    // Utilizar el filtro toLocaleString con el formato colombiano
+    return value.toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP'
+    });
+}
+
 // const swal = inject('$swal');
 
 // // Modal de eliminacion

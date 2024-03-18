@@ -36,13 +36,12 @@ class PermissionTableSeeder extends Seeder
         ];
 
         $permissions6 = [
-            'informacionusuario-list',
-            'informacionusuario-create',
-            'informacionusuario-edit',
-            'informacionusuario-delete'
+            'perfilProfesional-list',
+            'perfilProfesional-edit',
+            
         ];
 
-        foreach ($permissions5 as $permission) {
+        foreach ($permissions6 as $permission) {
             Permission::create(['name' => $permission]);
         }
     }
