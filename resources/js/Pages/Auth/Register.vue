@@ -25,7 +25,7 @@
             <div v-if="checked == false" class="flex">
 
                 <!-- validado -->
-                <div v-if="isValidate" class="sm:grid grid-cols-2 gap-4 mt-6">
+                <div v-if="isValidate" class="w-full sm:grid grid-cols-2 gap-4 mt-6">
 
                     <!-- nombre -->
                     <div class="mb-2">
@@ -100,25 +100,27 @@
 
                 <!-- VALIDACION -->
                 <div v-else class="m-auto">
-                    <div class="mt-4 flex items-center justify-center">
-                        <p class="text-white text-xl sm:text-2xl">VALIDACIÓN</p>
+                    <div class="mt-5 flex items-center justify-center">
+                        <p class="text-white text-xl sm:text-xl">Validar registro ingresando su numero de
+                            Indentificación</p>
                     </div>
-                    <div class="sm:grid grid-cols-2 gap-4 mt-4">
-                        <!-- nombre -->
-                        <div class="mb-2">
-                            <InputLabel for="name" value="Nombre" class="text-white" />
-                            <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required
-                                autocomplete="name" />
-                            <InputError class="mt-2" :message="form.errors.name" />
-                        </div>
+                    <div class="gap-4 mt-4">
+
                         <!-- identificacion -->
                         <div class="mb-2">
-                            <InputLabel for="identificacion" value="Indentificación" class="text-white" />
+
                             <TextInput id="identificacion" type="text" class="mt-1 block w-full"
                                 v-model="form.identificacion" required autocomplete="identificacion" />
                             <InputError class="mt-2" :message="form.errors.identificacion" />
                         </div>
                     </div>
+
+                    <div class="mt-6 flex flex-col items-center">
+                        <PrimaryButton class="w-2/6 justify-center" @click="isValidate = true">
+                            Validar
+                        </PrimaryButton>
+                    </div>
+
                 </div>
 
             </div>
@@ -197,8 +199,8 @@
             </div>
 
             <div class="mt-4 flex flex-col items-center">
-                <PrimaryButton class="w-2/6 justify-center" :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing">
+                <PrimaryButton v-if="isValidate || checked" class="w-2/6 justify-center"
+                    :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </PrimaryButton>
 
@@ -259,6 +261,17 @@ const nomDepart = ref([{ departamento: 'Nariño' },
 
 //array con municipios+
 const nomMuni = ref([]);
+
+//validado
+const isValidate = ref(false);
+
+
+//Cambiar vista formulario
+watch(isValidate, (value) => {
+
+    console.log(value);
+
+});
 
 //Cambiar form
 watch(checked, (value) => {
