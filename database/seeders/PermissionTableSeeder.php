@@ -41,7 +41,15 @@ class PermissionTableSeeder extends Seeder
             
         ];
 
-        foreach ($permissions6 as $permission) {
+        $permissions7 = [
+            'ofertasEmpresa-list',
+            'ofertasEmpresa-create',
+            'ofertasEmpresa-edit',
+            'ofertasEmpresa-delete',
+            
+        ];
+
+        foreach ($permissions7 as $permission) {
             Permission::create(['name' => $permission]);
         }
     }

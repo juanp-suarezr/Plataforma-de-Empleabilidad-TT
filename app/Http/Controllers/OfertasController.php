@@ -15,6 +15,14 @@ use Inertia\Inertia;
 class OfertasController extends Controller
 {
 
+    // function __construct()
+    // {
+    //     $this->middleware('permission:ofertasEmpresa-list|ofertasEmpresa-create|ofertasEmpresa-edit|ofertasEmpresa-delete', ['only' => ['index', 'store']]);
+    //         $this->middleware('permission:ofertasEmpresa-create', ['only' => ['create', 'store']]);
+    //         $this->middleware('permission:ofertasEmpresa-edit', ['only' => ['edit', 'update']]);
+    //         $this->middleware('permission:ofertasEmpresa-delete', ['only' => ['destroy']]);
+    // }
+
 
     function index() {
         // $ofertas = Ofertas::all();
