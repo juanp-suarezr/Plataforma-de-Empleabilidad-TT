@@ -18,7 +18,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="intro-container">
+    <div class="">
         @inertia
     </div>
 </body>

@@ -16,7 +16,7 @@
         </div>
 
         <div class="lg:w-1/2 md:w-2/3 overflow-x-scroll md:overflow-x-auto rounded-lg shadow">
-            <table class="w-full whitespace-no-wrap overflow-x-auto">
+            <table class="w-full whitespace-no-wrap overflow-x-auto border-[#e1e5ea] border-2">
                 <thead>
                     <tr class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                         <th

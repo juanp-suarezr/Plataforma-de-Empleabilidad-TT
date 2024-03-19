@@ -8,49 +8,43 @@
         </Link>
 
         <form @submit.prevent="submit">
-            <div class="card flex justify-content-center mx-6 z-10 gap-4">
-                <p class="text-lg md:text-2xl mt-4 text-white">Registrarse como</p>
-                <button @click="checked = !checked" class="rounded-xl p-2"
-                    :class="checked ? 'bg-sky-500' : 'bg-sky-800'">
-                    <p v-if="checked == false" class="text-white">
-                        Campista
-                    </p>
-                    <p v-else class="text-white">
-                        Empresa
-                    </p>
-                </button>
+            <div class="card flex justify-center mx-6 z-10 gap-4 mt-4">
+                <div class="card flex justify-content-center">
+                    <SelectButton v-model="tipo_user" :options="options_user" aria-labelledby="basic" />
+                </div>
+                
             </div>
 
             <!-- REGISTER CAMPISTA -->
-            <div v-if="checked == false" class="flex">
+            <div v-if="tipo_user == 'campista'" class="flex">
 
                 <!-- validado -->
                 <div v-if="isValidate" class="w-full sm:grid grid-cols-2 gap-4 mt-6">
 
                     <!-- nombre -->
                     <div class="mb-2">
-                        <InputLabel for="name" value="Nombre" class="text-white" />
+                        <InputLabel for="name" value="Nombre" class="text-gray-800" />
                         <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required
                             autocomplete="name" />
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
                     <!-- identificacion -->
                     <div class="mb-2">
-                        <InputLabel for="identificacion" value="NIT" class="text-white" />
+                        <InputLabel for="identificacion" value="Identificación" class="text-gray-800" />
                         <TextInput id="identificacion" type="text" class="mt-1 block w-full"
                             v-model="form.identificacion" required autocomplete="identificacion" />
                         <InputError class="mt-2" :message="form.errors.identificacion" />
                     </div>
                     <!-- telefono -->
                     <div class="mb-2">
-                        <InputLabel for="telefono" value="Telefono" class="text-white" />
+                        <InputLabel for="telefono" value="Telefono" class="text-gray-800" />
                         <TextInput id="telefono" type="tel" class="mt-1 block w-full" v-model="form.telefono" required
                             autocomplete="telefono" />
                         <InputError class="mt-2" :message="form.errors.telefono" />
                     </div>
                     <!-- departamento -->
                     <div class="mb-2">
-                        <InputLabel for="departamento" value="Departamento" class="text-white" />
+                        <InputLabel for="departamento" value="Departamento" class="text-gray-800" />
                         <select id="departamento" name="departamento" v-model="deparatamentoSelect"
                             class="block w-full px-4 py-2 mt-1 text-base text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
 
@@ -61,7 +55,7 @@
                     </div>
                     <!-- municipio -->
                     <div class="mb-2">
-                        <InputLabel for="ciudad" value="Municipio" class="text-white" />
+                        <InputLabel for="ciudad" value="Municipio" class="text-gray-800" />
                         <select id="ciudad" name="ciudad" v-model="form.ciudad" :disabled="deparatamentoSelect == ''"
                             class="block w-full px-4 py-2 mt-1 text-base text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
 
@@ -72,21 +66,21 @@
                     </div>
                     <!-- email -->
                     <div class="mb-2">
-                        <InputLabel for="email" value="Email" class="text-white" />
+                        <InputLabel for="email" value="Email" class="text-gray-800" />
                         <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
                             autofocus autocomplete="username" />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
                     <div class="mb-2">
-                        <InputLabel for="password" value="Password" class="text-white" />
+                        <InputLabel for="password" value="Password" class="text-gray-800" />
                         <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password"
                             required autocomplete="new-password" />
                         <InputError class="mt-2" :message="form.errors.password" />
                     </div>
 
                     <div class="mb-2">
-                        <InputLabel for="password_confirmation" value="Confirm Password" class="text-white" />
+                        <InputLabel for="password_confirmation" value="Confirm Password" class="text-gray-800" />
                         <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
                             v-model="form.password_confirmation" required autocomplete="new-password" />
                         <InputError class="mt-2" :message="form.errors.password_confirmation" />
@@ -101,8 +95,8 @@
                 <!-- VALIDACION -->
                 <div v-else class="m-auto">
                     <div class="mt-5 flex items-center justify-center">
-                        <p class="text-white text-xl sm:text-xl">Validar registro ingresando su numero de
-                            Indentificación</p>
+                        <p class="text-gray-800 text-center text-xl sm:text-xl">Validar registro ingresando su numero de
+                            Identificación</p>
                     </div>
                     <div class="gap-4 mt-4">
 
@@ -199,7 +193,7 @@
             </div>
 
             <div class="mt-4 flex flex-col items-center">
-                <PrimaryButton v-if="isValidate || checked" class="w-2/6 justify-center"
+                <PrimaryButton v-if="isValidate || tipo_user == 'empresa'" class="w-2/6 justify-center"
                     :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </PrimaryButton>
@@ -221,6 +215,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue'
+import SelectButton from 'primevue/selectbutton';
 
 
 const form = useForm({
@@ -252,7 +247,8 @@ const props = defineProps({
 console.log(props.resultados);
 
 //checked para empresas o campistas
-const checked = ref(false);
+const tipo_user = ref('campista');
+const options_user = ref(['campista', 'empresa']);
 //select departamentos
 const deparatamentoSelect = ref("");
 //array con departamentos
@@ -274,12 +270,12 @@ watch(isValidate, (value) => {
 });
 
 //Cambiar form
-watch(checked, (value) => {
+watch(tipo_user, (value) => {
 
     nomDepart.value = [];
     let dep1 = true;
     let dep2 = true;
-    if (checked.value == false) {
+    if (tipo_user.value == 'campista') {
 
         nomDepart.value = [
             { departamento: 'Cauca' },

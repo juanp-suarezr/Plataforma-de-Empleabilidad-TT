@@ -2,11 +2,13 @@
     <div :class="$page.props.showingMobileMenu ? 'block' : 'hidden'" @click="$page.props.showingMobileMenu = false"
         class="fixed inset-0 z-20 bg-black opacity-50 transition-opacity lg:hidden"></div>
 
+        <!-- bg-gradient-to-br from-purple-800 via-blue-800 to-blue-400 -->
     <div :class="$page.props.showingMobileMenu
             ? 'translate-x-0 ease-out'
             : '-translate-x-full ease-in'
         "
-        class="overflow-y-auto fixed inset-y-0 left-0 z-30 w-64 bg-gradient-to-br from-purple-800 via-blue-800 to-blue-400 transition duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
+        
+        class="overflow-y-auto fixed inset-y-0 left-0 z-30 w-64 transition bg-blue-900 duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
         <div class="flex justify-center items-center mt-5">
             <div class="flex items-center justify-center">
                 <img :src="imglogo_w" class="w-5/6" alt="" />
@@ -19,15 +21,15 @@
             <SeparadorMenu>Menú</SeparadorMenu>
             <!-- inicio -->
             <nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                <HomeIcon class="h-6 w-6 text-white" />
+                <HomeIcon class="h-6 w-6" :class="route().current('dashboard') ? 'text-gray-800' : 'text-white'" />
                 <span class="mx-3">Inicio</span>
             </nav-link>
 
-            <SeparadorMenu>trabajos</SeparadorMenu>
+            <SeparadorMenu>Ofertas</SeparadorMenu>
             <!-- Busqueda empresas (campista) -->
             <nav-link v-if="$page.props.user.permissions.includes('buscarOfertas-list')
         " :href="route('buscarOfertas.index')" :active="route().current('buscarOfertas.index')">
-                <MagnifyingGlassIcon class="h-6 w-6 text-white" />
+                <MagnifyingGlassIcon class="h-6 w-6"  :class="route().current('buscarOfertas.index') ? 'text-gray-800' : 'text-white'" />
                 <span class="mx-3">Busqueda de ofertas </span>
             </nav-link>
             <!-- Publicacion trabajo (campista) -->
@@ -39,7 +41,7 @@
 
             <!-- Busqueda empresas (empresa) -->
             <nav-link :href="route('ofertas.index')" :active="route().current('ofertas.index')">
-                <ShareIcon class="h-6 w-6 text-white" />
+                <ShareIcon class="h-6 w-6" :class="route().current('ofertas.index') ? 'text-gray-800' : 'text-white'" />
                 <span class="mx-3">Mis ofertas de trabajo </span>
             </nav-link>
 
@@ -78,7 +80,7 @@
 import NavLink from "@/Components/NavLink.vue";
 import SeparadorMenu from "@/Components/SeparadorMenu.vue";
 import { Link } from "@inertiajs/vue3";
-import imglogo_w from "/public/assets/img/logo.png";
+import imglogo_w from "/public/assets/img/logo_white.png";
 import { ref } from "vue";
 import {
     HomeIcon,

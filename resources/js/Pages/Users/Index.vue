@@ -1,4 +1,5 @@
 <template>
+
     <Head title="Usuarios" />
 
     <AuthenticatedLayout>
@@ -30,7 +31,7 @@
                         class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-0 focus:border-transparent"
                         placeholder="Busqueda de usuarios" required>
                     <button type="submit" @click="handleEnterKey"
-                        class="text-white absolute end-2.5 bottom-2.5 bg-sky-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-sky-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+                        class="text-white absolute end-2.5 bottom-2.5 bg-sky-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 bg-purple-800 hover:bg-blue-700 focus:ring-blue-800">Buscar</button>
                 </div>
             </div>
 
@@ -42,14 +43,14 @@
 
 
         </div>
-        <div class="flex flex-col overflow-x-auto">
+        <div class="flex flex-col overflow-x-auto border-[#e1e5ea] border-2">
             <div class="inline-block rounded-lg shadow">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-x-auto">
                         <table class="min-w-full whitespace-no-wrap ">
                             <thead>
                                 <tr
-                                    class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    class="border-b bg-white text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                                     <th colspan="2"
                                         class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
                                         Nombre
@@ -107,14 +108,18 @@
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <div
+                                    class="w-full flex flex-col items-center bg-transparent px-5 py-5 xs:flex-row xs:justify-between">
+                                    <pagination :links="users.links" />
+                                </div>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex flex-col items-center border-t bg-white px-5 py-5 xs:flex-row xs:justify-between">
-            <pagination :links="users.links" />
-        </div>
+
 
     </AuthenticatedLayout>
 </template>
